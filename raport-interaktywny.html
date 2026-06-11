@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zastąpieni — Raport Projektu / Project Report</title>
+<style>
+:root {
+  --bg: #0d0f14;
+  --bg2: #141720;
+  --bg3: #1a1e2a;
+  --accent: #e8a838;
+  --accent2: #f0c060;
+  --blue: #4a9eed;
+  --red: #e05252;
+  --text: #e8e4d8;
+  --muted: #8a8880;
+  --border: rgba(232,168,56,0.15);
+  --card: rgba(26,30,42,0.9);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+
+/* ── LAYOUT ── */
+.layout { display: flex; min-height: 100vh; }
+
+/* ── SIDEBAR ── */
+.sidebar {
+  width: 280px; flex-shrink: 0;
+  background: var(--bg2); border-right: 1px solid var(--border);
+  position: fixed; top: 0; left: 0; height: 100vh; overflow-y: auto;
+  display: flex; flex-direction: column;
+  padding: 2rem 0;
+}
+.sidebar-logo {
+  padding: 0 1.75rem 2rem;
+  border-bottom: 1px solid var(--border);
+}
+.sidebar-logo .title { font-size: 1.4rem; font-weight: 900; color: var(--accent); letter-spacing: -0.02em; }
+.sidebar-logo .sub { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em; margin-top: 0.25rem; }
+.sidebar-nav { padding: 1.5rem 0; flex: 1; }
+.nav-item {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 0.85rem 1.75rem; cursor: pointer;
+  border-left: 3px solid transparent;
+  transition: all 0.2s; text-decoration: none; color: var(--muted);
+  font-size: 0.88rem; line-height: 1.35;
+}
+.nav-item:hover { color: var(--text); background: rgba(232,168,56,0.05); }
+.nav-item.active { color: var(--accent); border-left-color: var(--accent); background: rgba(232,168,56,0.07); }
+.nav-arrow { font-size: 0.75rem; opacity: 0.5; flex-shrink: 0; }
+.nav-item.active .nav-arrow { opacity: 1; color: var(--accent); }
+.sidebar-footer { padding: 1.5rem 1.75rem; border-top: 1px solid var(--border); }
+.lang-toggle { display: flex; gap: 0; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; width: fit-content; }
+.lang-toggle button { background: none; border: none; cursor: pointer; padding: 0.35rem 0.9rem; font-size: 0.78rem; letter-spacing: 0.08em; color: var(--muted); transition: 0.2s; font-weight: 600; }
+.lang-toggle button.active { background: var(--accent); color: #000; }
+
+/* ── MAIN ── */
+.main { flex: 1; overflow: hidden; margin-left: 280px; }
+
+/* ── HERO ── */
+.hero {
+  position: relative; min-height: 100vh;
+  background: linear-gradient(180deg, #0a0c10 0%, #0d1520 50%, #0d0f14 100%);
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 4rem 4rem 4rem;
+  overflow: hidden;
+}
+.hero-bg-grid {
+  position: absolute; inset: 0; opacity: 0.04;
+  background-image: linear-gradient(var(--accent) 1px, transparent 1px), linear-gradient(90deg, var(--accent) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.hero-stat-bg {
+  position: absolute; top: 3rem; right: 3rem;
+  display: flex; flex-direction: column; gap: 1rem; align-items: flex-end;
+}
+.hero-stat-bg .big-num {
+  font-size: 7rem; font-weight: 900; line-height: 1;
+  color: rgba(232,168,56,0.06); letter-spacing: -0.04em;
+}
+.hero-tag {
+  font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--accent); font-weight: 700; margin-bottom: 1rem;
+  display: flex; align-items: center; gap: 0.75rem;
+}
+.hero-tag::before { content:''; width: 30px; height: 1px; background: var(--accent); }
+.hero-title { font-size: clamp(3.5rem, 8vw, 7rem); font-weight: 900; letter-spacing: -0.04em; line-height: 0.9; margin-bottom: 1rem; }
+.hero-title .main-word { color: var(--accent); }
+.hero-title .sub-word { color: rgba(232,220,200,0.25); font-size: 0.4em; display: block; letter-spacing: 0.05em; font-weight: 400; margin-top: 0.5rem; }
+.hero-desc { max-width: 520px; color: var(--muted); font-size: 1rem; margin-bottom: 2.5rem; line-height: 1.65; }
+.hero-kpis { display: flex; gap: 2.5rem; flex-wrap: wrap; }
+.kpi { }
+.kpi .num { font-size: 2.2rem; font-weight: 800; color: var(--accent2); line-height: 1; }
+.kpi .lbl { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 0.2rem; }
+.scroll-cue { position: relative; margin-top: 3rem; color: var(--muted); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; text-align: center; animation: bob 2s ease-in-out infinite; align-self: flex-start; }
+.scroll-cue::after { content:'↓'; display:block; font-size:1.2rem; margin-top:0.3rem; }
+@keyframes bob { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(6px)} }
+
+/* ── SECTIONS ── */
+.section { padding: 5rem 4rem; border-bottom: 1px solid var(--border); }
+.section-head { margin-bottom: 3rem; }
+.section-label { font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.6rem; }
+.section-label::after { content:''; flex:1; height:1px; background:var(--border); max-width:60px; }
+h2 { font-size: clamp(1.6rem, 2.5vw, 2.2rem); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+.section-intro { color: var(--muted); max-width: 600px; font-size: 0.95rem; }
+
+/* ── CARDS ── */
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; transition: border-color 0.2s; }
+.card:hover { border-color: rgba(232,168,56,0.35); }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.25rem; }
+.grid-auto { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 1.25rem; }
+
+/* ── SPLIT ── */
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 3.5rem; align-items: start; }
+.split.flip .img-col { order: -1; }
+
+/* ── IMAGES ── */
+figure.img-block { border-radius: 10px; overflow: hidden; border: 1px solid var(--border); background: var(--bg3); }
+figure.img-block img { width: 100%; display: block; }
+figure.img-block figcaption { padding: 0.85rem 1rem; font-size: 0.76rem; color: var(--muted); line-height: 1.5; border-top: 1px solid var(--border); }
+figure.img-block figcaption strong { color: var(--text); }
+
+/* ── PDF EMBED ── */
+.pdf-wrapper { border-radius: 10px; overflow: hidden; border: 1px solid var(--border); background: var(--bg3); }
+.pdf-wrapper embed { width: 100%; height: 80vh; display: block; }
+.pdf-fallback { padding: 2.5rem; text-align: center; }
+.pdf-fallback a { color: var(--accent); font-weight: 700; font-size: 1.1rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; border: 1px solid var(--accent); padding: 0.75rem 1.5rem; border-radius: 8px; transition: 0.2s; }
+.pdf-fallback a:hover { background: var(--accent); color: #000; }
+
+/* ── COMIC PANEL PREVIEW ── */
+.comic-preview { display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem; }
+.comic-panel { border-radius: 8px; overflow: hidden; border: 1px solid var(--border); aspect-ratio: 3/4; background: var(--bg3); position: relative; }
+.comic-panel img { width: 100%; height: 100%; object-fit: cover; }
+.comic-panel .panel-num { position: absolute; top: 0.5rem; left: 0.5rem; background: rgba(0,0,0,0.7); color: var(--accent); font-size: 0.65rem; font-weight: 700; padding: 0.2rem 0.45rem; border-radius: 3px; letter-spacing: 0.05em; }
+
+/* ── SOURCE ITEM ── */
+.source-list { display: flex; flex-direction: column; gap: 0; }
+.source-item { display: grid; grid-template-columns: auto 1fr; gap: 1.25rem; padding: 1.5rem 0; border-bottom: 1px solid rgba(232,168,56,0.07); align-items: start; }
+.source-item:last-child { border-bottom: none; }
+.badge { padding: 0.25rem 0.65rem; border-radius: 20px; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; white-space: nowrap; flex-shrink: 0; margin-top: 0.1rem; }
+.badge-high { background: rgba(52,211,153,0.12); color: #34d399; border: 1px solid rgba(52,211,153,0.25); }
+.badge-med { background: rgba(251,191,36,0.12); color: #fbbf24; border: 1px solid rgba(251,191,36,0.25); }
+.source-item h4 { font-size: 0.92rem; font-weight: 700; margin-bottom: 0.3rem; }
+.source-item p { font-size: 0.84rem; color: var(--muted); line-height: 1.55; }
+.source-item a { color: var(--blue); text-decoration: none; font-size: 0.78rem; }
+.source-item a:hover { text-decoration: underline; }
+
+/* ── PROMPT BLOCK ── */
+.prompt-block { background: #090b10; border: 1px solid rgba(74,158,237,0.2); border-radius: 10px; padding: 1.25rem 1.5rem; margin-bottom: 1.25rem; }
+.prompt-block + .prompt-block { margin-top: 0; }
+.prompt-who { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; }
+.prompt-who img { width: 28px; height: 28px; object-fit: contain; background: white; border-radius: 4px; padding: 2px; }
+.prompt-who .tool-name { font-size: 0.75rem; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: 0.1em; }
+.prompt-text { font-family: 'Consolas', 'Fira Code', monospace; font-size: 0.82rem; color: #a5c8f5; line-height: 1.65; white-space: pre-wrap; }
+
+/* ── TOOL GRID ── */
+.tool-item { display: flex; flex-direction: column; align-items: center; gap: 0.75rem; padding: 1.5rem 1rem; text-align: center; }
+.tool-item img { width: 80px; height: 45px; object-fit: contain; }
+.tool-item h4 { font-size: 0.85rem; font-weight: 700; }
+.tool-item p { font-size: 0.78rem; color: var(--muted); }
+.role-pill { font-size: 0.65rem; padding: 0.15rem 0.55rem; border-radius: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+.role-research { background: rgba(74,158,237,0.15); color: var(--blue); border: 1px solid rgba(74,158,237,0.25); }
+.role-script { background: rgba(232,168,56,0.15); color: var(--accent); border: 1px solid rgba(232,168,56,0.25); }
+.role-data { background: rgba(52,211,153,0.12); color: #34d399; border: 1px solid rgba(52,211,153,0.25); }
+.role-image { background: rgba(224,82,82,0.12); color: var(--red); border: 1px solid rgba(224,82,82,0.25); }
+.role-language { background: rgba(168,85,247,0.12); color: #a855f7; border: 1px solid rgba(168,85,247,0.25); }
+
+/* ── PROCESS STEPS ── */
+.steps { display: flex; flex-direction: column; gap: 0; }
+.step { display: grid; grid-template-columns: 3rem 1fr; gap: 1.25rem; padding: 1.5rem 0; border-bottom: 1px solid rgba(232,168,56,0.07); }
+.step:last-child { border-bottom: none; }
+.step-num { width: 2rem; height: 2rem; border-radius: 50%; background: var(--accent); color: #000; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; font-weight: 800; flex-shrink: 0; margin-top: 0.1rem; }
+.step h4 { font-size: 0.92rem; font-weight: 700; margin-bottom: 0.3rem; color: var(--text); }
+.step p { font-size: 0.85rem; color: var(--muted); line-height: 1.55; }
+
+/* ── PROBLEM ITEM ── */
+.problem-item { border: 1px solid rgba(224,82,82,0.2); border-radius: 10px; overflow: hidden; }
+.problem-item .problem-head { padding: 0.85rem 1rem; background: rgba(224,82,82,0.06); border-bottom: 1px solid rgba(224,82,82,0.15); }
+.problem-item .problem-head h4 { font-size: 0.85rem; font-weight: 700; color: #f08080; }
+.problem-item img { width: 100%; display: block; }
+.problem-item p { padding: 0.75rem 1rem; font-size: 0.8rem; color: var(--muted); }
+
+/* ── STORYTELLING ── */
+.story-card { border-left: 3px solid var(--accent); border-radius: 0 10px 10px 0; background: var(--bg3); padding: 1.5rem 1.75rem; }
+.story-card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--accent2); }
+.story-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
+
+/* ── STATS BOX ── */
+.stat-box { text-align: center; padding: 1.5rem 1rem; }
+.stat-box .big { font-size: 2.5rem; font-weight: 800; line-height: 1; margin-bottom: 0.3rem; }
+.stat-box .sm { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; }
+.stat-accent { color: var(--accent2); }
+.stat-red { color: var(--red); }
+.stat-blue { color: var(--blue); }
+
+/* ── DIVIDER ── */
+.divider { height: 1px; background: var(--border); margin: 0; }
+
+/* ── LANG ── */
+body.lang-en [data-pl] { display: none !important; }
+body.lang-pl [data-en] { display: none !important; }
+
+/* ── THUMBNAIL GRID (lightbox) ── */
+.thumb-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--thumb-min, 200px), 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.thumb {
+  border-radius: 10px; overflow: hidden;
+  border: 1px solid var(--border); background: var(--bg3);
+  cursor: zoom-in; transition: border-color 0.2s, transform 0.15s;
+  display: flex; flex-direction: column;
+}
+.thumb:hover { border-color: var(--accent); transform: translateY(-2px); }
+.thumb img { width: 100%; height: 160px; object-fit: cover; object-position: top; display: block; }
+.thumb-label {
+  padding: 0.5rem 0.75rem 0.2rem;
+  font-size: 0.78rem; font-weight: 700; color: var(--text);
+}
+.thumb-caption {
+  padding: 0 0.75rem 0.6rem;
+  font-size: 0.72rem; color: var(--muted); line-height: 1.4;
+}
+
+/* ── PROB GRID (problems thumbnails) ── */
+.prob-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1rem;
+}
+.prob-thumb {
+  border-radius: 8px; overflow: hidden;
+  border: 1px solid rgba(224,82,82,0.2); background: var(--bg3);
+  cursor: zoom-in; transition: border-color 0.2s, transform 0.15s;
+  display: flex; flex-direction: column;
+}
+.prob-thumb:hover { border-color: var(--red); transform: translateY(-2px); }
+.prob-thumb img { width: 100%; height: 120px; object-fit: cover; object-position: top; display: block; }
+.prob-label {
+  padding: 0.45rem 0.65rem 0.15rem;
+  font-size: 0.75rem; font-weight: 700; color: #f08080;
+}
+.prob-thumb .thumb-caption {
+  padding: 0 0.65rem 0.5rem;
+}
+
+/* ── LIGHTBOX ── */
+#lightbox {
+  display: none; position: fixed; inset: 0; z-index: 1000;
+  background: rgba(0,0,0,0.88); backdrop-filter: blur(8px);
+  align-items: center; justify-content: center; flex-direction: column;
+  padding: 2rem;
+}
+#lightbox.open { display: flex; }
+#lightbox img {
+  max-width: min(90vw, 800px); max-height: 80vh;
+  object-fit: contain; border-radius: 8px;
+  box-shadow: 0 0 60px rgba(0,0,0,0.6);
+}
+#lightbox .lb-caption {
+  margin-top: 1rem; color: rgba(232,228,216,0.75);
+  font-size: 0.85rem; text-align: center; max-width: 600px; line-height: 1.5;
+}
+#lightbox .lb-close {
+  position: absolute; top: 1.5rem; right: 1.5rem;
+  background: none; border: 1px solid rgba(255,255,255,0.2); color: #fff;
+  font-size: 1.2rem; line-height: 1; padding: 0.4rem 0.75rem;
+  border-radius: 6px; cursor: pointer; transition: background 0.2s;
+}
+#lightbox .lb-close:hover { background: rgba(255,255,255,0.1); }
+
+/* ── RESPONSIVE ── */
+@media(max-width: 960px) {
+  .layout { flex-direction: column; }
+  .sidebar { width: 100%; height: auto; position: sticky; top: 0; left: auto; z-index: 100; flex-direction: row; flex-wrap: wrap; padding: 1rem; }
+  .main { margin-left: 0; }
+  .sidebar-logo { padding: 0.5rem 1rem 0.5rem 0; border-bottom: none; border-right: 1px solid var(--border); margin-right: 1rem; }
+  .sidebar-nav { display: flex; flex-wrap: wrap; padding: 0; flex: 1; }
+  .nav-item { padding: 0.5rem 0.75rem; font-size: 0.76rem; }
+  .sidebar-footer { border-top: none; padding: 0.5rem; }
+  .split { grid-template-columns: 1fr; }
+  .split.flip .img-col { order: 0; }
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  .section { padding: 3rem 1.5rem; }
+  .hero { padding: 3rem 1.5rem; }
+}
+</style>
+</head>
+<body class="lang-pl">
+
+<div class="layout">
+
+<!-- ── SIDEBAR ── -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="title" data-pl>Zastąpieni</div>
+    <div class="title" data-en>Zastąpieni (Replaced)</div>
+    <div class="sub" data-pl>Raport projektu · czerwiec 2026</div>
+    <div class="sub" data-en>Project report · June 2026</div>
+  </div>
+  <nav class="sidebar-nav">
+    <a href="#hero" class="nav-item active">
+      <span class="nav-arrow">→</span>
+      <span data-pl>Start</span><span data-en>Start</span>
+    </a>
+    <a href="#comic" class="nav-item">
+      <span class="nav-arrow">→</span>
+      <span data-pl>Komiks — PDF</span><span data-en>Comic — PDF</span>
+    </a>
+    <a href="#ewolucja" class="nav-item">
+      <span class="nav-arrow">→</span>
+      <span data-pl>Ewolucja projektu</span><span data-en>Project Evolution</span>
+    </a>
+    <a href="#sources" class="nav-item">
+      <span class="nav-arrow">→</span>
+      <span data-pl>Lista źródeł z opisem wiarygodności</span><span data-en>Sources with credibility ratings</span>
+    </a>
+    <a href="#prompts" class="nav-item">
+      <span class="nav-arrow">→</span>
+      <span data-pl>Użyte prompty do AI i generowania obrazów</span><span data-en>AI & image generation prompts</span>
+    </a>
+    <a href="#process" class="nav-item">
+      <span class="nav-arrow">→</span>
+      <span data-pl>Opis procesu pracy z AI</span><span data-en>AI workflow description</span>
+    </a>
+    <a href="#storytelling" class="nav-item">
+      <span class="nav-arrow">→</span>
+      <span data-pl>Krótkie uzasadnienie wyborów storytellingowych</span><span data-en>Storytelling choices justification</span>
+    </a>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="lang-toggle">
+      <button id="btn-pl" class="active" onclick="setLang('pl')">PL</button>
+      <button id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+    <div style="margin-top:1rem; font-size:0.7rem; color:var(--muted);">D. Satora-Izquierdo</div>
+  </div>
+</aside>
+
+<!-- ── MAIN ── -->
+<main class="main">
+
+<!-- HERO -->
+<section id="hero" class="hero">
+  <div class="hero-bg-grid"></div>
+  <div class="hero-stat-bg">
+    <div class="big-num">201</div>
+    <div class="big-num">mln</div>
+  </div>
+
+  <div class="hero-tag" data-pl>Data Storytelling · Projekt 2 · AI Narzedziownik</div>
+  <div class="hero-tag" data-en>Data Storytelling · Project 2 · AI Toolkit Course</div>
+
+  <h1 class="hero-title">
+    <span class="main-word" data-pl>Zastąpieni</span>
+    <span class="main-word" data-en>Zastąpieni <span style="font-size:0.55em; opacity:0.6;">(Replaced)</span></span>
+    <span class="sub-word" data-pl>Niewidzialna bariera na rynku pracy</span>
+    <span class="sub-word" data-en>The invisible barrier on the job market</span>
+  </h1>
+
+  <p class="hero-desc" data-pl>Mimo rekordowego zatrudnienia w UE (201,6 mln w 2025 r.), sztuczna inteligencja blokuje młodym ludziom start zawodowy. AI eliminuje stanowiska entry-level i zastępuje je rolami wymagającymi seniorskich kwalifikacji — tworząc paradoks, który stał się tematem tego projektu.</p>
+  <p class="hero-desc" data-en>Despite record EU employment (201.6 million in 2025), artificial intelligence is blocking young people's career starts. AI eliminates entry-level positions and replaces them with roles requiring senior qualifications — a paradox that became the subject of this project.</p>
+
+  <div class="hero-kpis">
+    <div class="kpi"><div class="num" style="color:#e05252;">−9 mln</div><div class="lbl" data-pl>stanowisk entry-level do 2030</div><div class="lbl" data-en>entry-level jobs by 2030</div></div>
+    <div class="kpi"><div class="num">+11 mln</div><div class="lbl" data-pl>nowych ról — senior/tech</div><div class="lbl" data-en>new roles — senior/tech</div></div>
+    <div class="kpi"><div class="num">86%</div><div class="lbl" data-pl>firm wdraża AI do 2030</div><div class="lbl" data-en>firms adopting AI by 2030</div></div>
+    <div class="kpi"><div class="num">39%</div><div class="lbl" data-pl>umiejętności idzie w odstawkę</div><div class="lbl" data-en>of skills become obsolete</div></div>
+  </div>
+
+  <div class="scroll-cue" data-pl>Przewiń</div>
+  <div class="scroll-cue" data-en>Scroll</div>
+</section>
+
+<!-- ═══════════════════════════════════ -->
+<!-- COMIC -->
+<section id="comic" class="section">
+  <div class="section-head">
+    <div class="section-label" data-pl>01 — Komiks</div>
+    <div class="section-label" data-en>01 — Comic</div>
+    <h2 data-pl>Komiks — PDF</h2>
+    <h2 data-en>Comic — PDF</h2>
+    <p class="section-intro" data-pl>8-kadrowy komiks „Zastąpieni" opowiadający historię Tomka — młodego absolwenta, który zderza się z niewidzialną barierą automatyzacji. Dane makroekonomiczne zostały wplecione bezpośrednio w przestrzeń narracyjną.</p>
+    <p class="section-intro" data-en>The 8-panel comic "Zastąpieni" (Replaced) tells the story of Tomek — a young graduate colliding with the invisible automation barrier. Macroeconomic data was woven directly into the narrative space.</p>
+  </div>
+
+  <div class="pdf-wrapper">
+    <embed src="Zastapieni.pdf" type="application/pdf">
+    <div class="pdf-fallback">
+      <a href="Zastapieni.pdf" target="_blank">
+        ↗ <span data-pl>Otwórz komiks PDF</span><span data-en>Open Comic PDF</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ -->
+<!-- EWOLUCJA PROJEKTU -->
+<section id="ewolucja" class="section">
+  <div class="section-head">
+    <div class="section-label" data-pl>02 — Ewolucja projektu</div>
+    <div class="section-label" data-en>02 — Project Evolution</div>
+    <h2 data-pl>Ewolucja projektu</h2>
+    <h2 data-en>Project Evolution</h2>
+    <p class="section-intro" data-pl>Kolejne iteracje komiksu generowane różnymi narzędziami AI. Kliknij miniaturę, aby powiększyć.</p>
+    <p class="section-intro" data-en>Successive comic iterations generated with different AI tools. Click a thumbnail to enlarge.</p>
+  </div>
+
+  <div class="thumb-grid">
+    <!-- 1. Gemini -->
+    <div class="thumb" onclick="openLightbox(this)">
+      <img src="obrazki roznych narzedzi/gemini chart problem.png" alt="Gemini — iter. 1">
+      <div class="thumb-label"><span data-pl>1. Gemini — iter. 1</span><span data-en>1. Gemini — iter. 1</span></div>
+      <div class="thumb-caption" data-pl>Pierwsza próba. Problem z implementacją wykresów, poziomy układ zamiast pionowego paska, brak tytułu.</div>
+      <div class="thumb-caption" data-en>First attempt. Chart implementation issue, horizontal layout instead of vertical strip, missing title.</div>
+    </div>
+    <!-- 2. Canva -->
+    <div class="thumb" onclick="openLightbox(this)">
+      <img src="obrazki roznych narzedzi/canva angielskie texty.png" alt="Canva AI">
+      <div class="thumb-label">2. Canva AI</div>
+      <div class="thumb-caption" data-pl>Dobra kompozycja i styl komiksowy. Tekst w kadrach pozostał angielski. Limit miesięczny osiągnięty przed poprawką.</div>
+      <div class="thumb-caption" data-en>Good composition and comic style. Panel text remained in English. Monthly limit hit before correction.</div>
+    </div>
+    <!-- 3. Gemini -->
+    <div class="thumb" onclick="openLightbox(this)">
+      <img src="obrazki roznych narzedzi/gemini dibry efekt, brak tytulu.png" alt="Gemini — iter. 2">
+      <div class="thumb-label"><span data-pl>3. Gemini — iter. 2</span><span data-en>3. Gemini — iter. 2</span></div>
+      <div class="thumb-caption" data-pl>Dobry efekt komiksowy i polskie teksty. Brakuje tytułu i autora. Znak wodny.</div>
+      <div class="thumb-caption" data-en>Good comic effect and Polish text. Missing title and author. Watermark.</div>
+    </div>
+    <!-- 4. Copilot -->
+    <div class="thumb" onclick="openLightbox(this)">
+      <img src="obrazki roznych narzedzi/copilot regurgitate.png" alt="Copilot">
+      <div class="thumb-label">4. Copilot</div>
+      <div class="thumb-caption" data-pl>Dialogi i statystyki zastąpione nieczytelnym ciągiem znaków. Całkowicie nieskuteczny dla polskich tekstów.</div>
+      <div class="thumb-caption" data-en>Dialogues and stats replaced by unreadable characters. Completely ineffective for Polish text.</div>
+    </div>
+    <!-- 5. GPT iter.1 -->
+    <div class="thumb" onclick="openLightbox(this)">
+      <img src="obrazki roznych narzedzi/GPT realistyczne, tablet na plecach.png" alt="ChatGPT — iter. 1">
+      <div class="thumb-label"><span data-pl>5. ChatGPT — iter. 1</span><span data-en>5. ChatGPT — iter. 1</span></div>
+      <div class="thumb-caption" data-pl>Tytuł i polskie teksty poprawne. Błąd: tablet na plecach Tomka zamiast na stole.</div>
+      <div class="thumb-caption" data-en>Title and Polish texts correct. Error: tablet on Tomek's back instead of on the table.</div>
+    </div>
+    <!-- 6. Gemini iter.3 -->
+    <div class="thumb" onclick="openLightbox(this)">
+      <img src="obrazki roznych narzedzi/gemini quite good, not perfect.png" alt="Gemini — iter. 3">
+      <div class="thumb-label"><span data-pl>6. Gemini — iter. 3</span><span data-en>6. Gemini — iter. 3</span></div>
+      <div class="thumb-caption" data-pl>Najlepsza wersja Gemini. Kompozycja i polskie teksty czytelne. Panel 5–6 niedokładny. Znak wodny.</div>
+      <div class="thumb-caption" data-en>Best Gemini version. Composition and Polish text readable. Panels 5–6 imprecise. Watermark.</div>
+    </div>
+    <!-- 7. GPT iter.2 -->
+    <div class="thumb" onclick="openLightbox(this)">
+      <img src="obrazki roznych narzedzi/GPT zbyt realistyczne.png" alt="ChatGPT — iter. 2 ★">
+      <div class="thumb-label"><span data-pl>7. ChatGPT — iter. 2 ★</span><span data-en>7. ChatGPT — iter. 2 ★</span></div>
+      <div class="thumb-caption" data-pl>Najlepszy wynik. Wykresy i polskie teksty prawidłowe. Wada: styl zbyt fotograficzny.</div>
+      <div class="thumb-caption" data-en>Best result. Charts and Polish text correct. Flaw: style too photographic.</div>
+    </div>
+  </div>
+</section>
+</section>
+
+<!-- ═══════════════════════════════════ -->
+<!-- SOURCES -->
+<section id="sources" class="section">
+  <div class="section-head">
+    <div class="section-label" data-pl>02 — Źródła</div>
+    <div class="section-label" data-en>02 — Sources</div>
+    <h2 data-pl>Lista źródeł z opisem wiarygodności</h2>
+    <h2 data-en>Sources with Credibility Assessment</h2>
+    <p class="section-intro" data-pl>Wszystkie dane statystyczne użyte w projekcie pochodzą z oficjalnych raportów instytucji publicznych lub think-tanków o uznanym autorytecie. Poniżej ocena każdego źródła.</p>
+    <p class="section-intro" data-en>All statistical data used in the project come from official reports of public institutions or established think-tanks. Below is an assessment of each source.</p>
+  </div>
+
+  <div class="source-list">
+    <div class="source-item">
+      <span class="badge badge-high" data-pl>★★★ Wysoka</span>
+      <span class="badge badge-high" data-en>★★★ High</span>
+      <div>
+        <h4 data-pl>Eurostat — Urząd Statystyczny Unii Europejskiej</h4>
+        <h4 data-en>Eurostat — Statistical Office of the European Union</h4>
+        <p data-pl>Oficjalna instytucja unijna przetwarzająca zharmonizowane dane dostarczane bezpośrednio przez urzędy statystyczne wszystkich krajów członkowskich (w tym polski GUS). Dane wolne od komercyjnych nacisków, podlegają rygorystycznym kryteriom prawnym. <strong>Użyte dane:</strong> zatrudnienie UE-27 — 201,6 mln (2025), wykres trendu 2016–2025.</p>
+        <p data-en>Official EU institution processing harmonised data supplied directly by the statistical offices of all member states (including Poland's GUS). Data free from commercial pressures, subject to strict legal criteria. <strong>Data used:</strong> EU-27 employment — 201.6 million (2025), trend chart 2016–2025.</p>
+        <a href="https://ec.europa.eu/eurostat" target="_blank">↗ ec.europa.eu/eurostat</a>
+      </div>
+    </div>
+    <div class="source-item">
+      <span class="badge badge-high" data-pl>★★★ Wysoka</span>
+      <span class="badge badge-high" data-en>★★★ High</span>
+      <div>
+        <h4>ILO — International Labour Organization / Międzynarodowa Organizacja Pracy</h4>
+        <p data-pl>Wyspecjalizowana agencja ONZ zajmująca się problematyką pracowniczą. Raporty uznawane za globalny autorytet — opierają się na danych z ponad 180 krajów tworzonych przez niezależnych ekspertów we współpracy z rządami, związkami zawodowymi i pracodawcami. Brak komercyjnych bodźców. <strong>Użyte dane:</strong> prognozy likwidacji stanowisk entry-level, bezrobocie młodzieży.</p>
+        <p data-en>Specialised UN agency on labour matters. Reports regarded as global authority — based on data from 180+ countries, created by independent experts in cooperation with governments, trade unions, and employers. No commercial incentives. <strong>Data used:</strong> forecasts for entry-level job elimination, youth unemployment.</p>
+        <a href="https://www.ilo.org" target="_blank">↗ ilo.org</a>
+      </div>
+    </div>
+    <div class="source-item">
+      <span class="badge badge-med" data-pl>★★☆ Średnia</span>
+      <span class="badge badge-med" data-en>★★☆ Medium</span>
+      <div>
+        <h4>WEF — World Economic Forum / Światowe Forum Ekonomiczne</h4>
+        <p data-pl>Fundacja lobbingowa zrzeszająca biznes (organizator forum w Davos). Raporty nie tworzą twardych statystyk państwowych, ale badają nastroje rynkowe — ankietują tysiące prezesów największych firm, pokazując realne plany wdrożenia AI. Ograniczenie: perspektywa korporacyjna. <strong>Użyte dane:</strong> 86% firm wdraża AI do 2030, +11 mln ról senior, prognoza umiejętności.</p>
+        <p data-en>A lobbying and business-membership foundation (organiser of Davos). Reports do not produce hard state statistics but survey market sentiment — surveying thousands of CEOs of the world's largest firms, revealing real AI deployment plans. Limitation: corporate perspective. <strong>Data used:</strong> 86% of firms adopting AI by 2030, +11M senior roles, skills forecast.</p>
+        <a href="https://www.weforum.org/reports/the-future-of-jobs-report-2025" target="_blank">↗ Future of Jobs Report 2025</a>
+      </div>
+    </div>
+    <div class="source-item">
+      <span class="badge badge-high" data-pl>★★★ Wysoka</span>
+      <span class="badge badge-high" data-en>★★★ High</span>
+      <div>
+        <h4>OECD — Employment Outlook</h4>
+        <p data-pl>Organizacja Współpracy Gospodarczej i Rozwoju — roczny raport o rynku pracy w 38 krajach OECD. Dane oparte na ujednoliconych metodologiach porównawczych, niezależna metodologia od krajów członkowskich. <strong>Użyte dane:</strong> kontekst zmian strukturalnych zatrudnienia, presja automatyzacji na zawody administracyjne.</p>
+        <p data-en>Organisation for Economic Co-operation and Development — annual report on the labour market in 38 OECD countries. Data based on standardised comparative methodologies, independent from member states. <strong>Data used:</strong> context of structural employment changes, automation pressure on administrative occupations.</p>
+        <a href="https://www.oecd.org/employment/oecd-employment-outlook.htm" target="_blank">↗ OECD Employment Outlook</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ -->
+<!-- PROMPTS -->
+<section id="prompts" class="section">
+  <div class="section-head">
+    <div class="section-label" data-pl>03 — Prompty</div>
+    <div class="section-label" data-en>03 — Prompts</div>
+    <h2 data-pl>Użyte prompty do AI i generowania obrazów</h2>
+    <h2 data-en>AI & Image Generation Prompts Used</h2>
+    <p class="section-intro" data-pl>Projekt wymagał trzech rodzajów promptów: do zebrania danych źródłowych, do stworzenia scenariusza komiksu oraz do generowania ilustracji.</p>
+    <p class="section-intro" data-en>The project required three types of prompts: for gathering source data, for creating the comic script, and for generating illustrations.</p>
+  </div>
+
+  <!-- Perplexity -->
+  <div class="prompt-block">
+    <div class="prompt-who">
+      <img src="perplexity.jpg" alt="Perplexity">
+      <span class="tool-name">Perplexity — Research prompt</span>
+    </div>
+    <div class="prompt-text" data-pl>Szukam wiarygodnych źródeł i danych do projektu o AI i rynku pracy. Analizuję paradoks: ogólne zatrudnienie rośnie, ale AI eliminuje stanowiska startowe (entry-level) dla absolwentów, tworząc głównie role seniorskie.
+
+Znajdź oficjalne raporty, statystyki i bazy danych z następujących instytucji (lub podobnych): WEF, ILO, Eurostat, GUS, Our World in Data, World Bank Data, Kaggle Datasets
+
+Dla każdego źródła podaj: link, tytuł, rok oraz kluczowe dane (np. % automatyzacji, liczba miejsc pracy), które posłużą do projektu.</div>
+    <div class="prompt-text" data-en>I am looking for credible sources and data for a project on AI and the labour market. I am analysing the paradox: overall employment is growing, but AI eliminates entry-level positions for graduates, mainly creating senior roles.
+
+Find official reports, statistics and databases from the following institutions (or similar): WEF, ILO, Eurostat, GUS, Our World in Data, World Bank Data, Kaggle Datasets
+
+For each source provide: link, title, year and key data (e.g. % automation, number of jobs) that will be used for the project.</div>
+  </div>
+
+  <!-- Claude -->
+  <div class="prompt-block">
+    <div class="prompt-who">
+      <img src="claude.jpg" alt="Claude">
+      <span class="tool-name">Claude — Comic script prompt</span>
+    </div>
+    <div class="prompt-text" data-pl>Pomóż mi stworzyć scenariusz 8-kadrowego komiksu opartego na danych statystycznych dotyczących wpływu AI na rynek pracy (paradoks: wysokie zatrudnienie vs. eliminacja stanowisk entry-level dla młodych). Załączam raporty. Przeanalizuj te źródła i zaproponuj koncepcję komiksu (8 kadr) według poniższej struktury:
+
+1. PROBLEM: Wprowadzenie zjawiska społecznego. Jak pokazać ten paradoks wizualnie? Zrób to przez zderzenie dwóch faktów.
+2. NAPIĘCIE: Dane jako element świata. Zaproponuj, jak wpleść twarde liczby/statystyki w tło (np. napisy na billboardach, nagłówki w telefonie bohatera, komunikaty w przestrzeni miejskiej).
+3. BOHATER: Człowiek z emocjami i perspektywą. Kim jest bohater? Jak te dane realnie wpływają na jego sytuację życiową i co czuje w tym momencie?
+4. REFLEKSJA: Ostatnie okienko, które zostawia czytelnika z pytaniem, konsekwencją lub sugestią na przyszłość.
+
+W odpowiedzi podaj: krótki profil bohatera (wiek, sytuacja), opis wizualny i tekstowy dla każdego z 8 kadrów, główne emocje, jakie ten komiks ma wywołać u odbiorcy.</div>
+    <div class="prompt-text" data-en>Help me create a script for an 8-panel comic based on statistical data about the impact of AI on the labour market (paradox: high employment vs. elimination of entry-level positions for young people). I am attaching reports. Analyse these sources and propose a comic concept (8 panels) following the structure below:
+
+1. PROBLEM: Introduction of the social phenomenon. How to show this paradox visually? Do it through a collision of two facts.
+2. TENSION: Data as elements of the world. Suggest how to weave hard numbers/statistics into the background.
+3. HERO: A person with emotions and a perspective. Who is the hero? How do these data actually affect his life situation?
+4. REFLECTION: The last panel, leaving the reader with a question, consequence, or suggestion for the future.
+
+In response provide: a short hero profile (age, situation), visual and textual description for each of the 8 panels, the main emotions this comic should evoke.</div>
+  </div>
+
+  <!-- Image generation -->
+  <div class="prompt-block">
+    <div class="prompt-who">
+      <img src="gpt.jpg" alt="ChatGPT">
+      <span class="tool-name">ChatGPT / Gemini / NanoBanana / Canva AI / Copilot — Image generation prompt</span>
+    </div>
+    <div class="prompt-text">CREATE an 8-panel COMIC VERTICAL strip 4x2 illustration with a cinematic, slightly dystopian, and moody aesthetic. The color palette shifts from warm sunrise colors in the beginning to cold blues, rainy grays, and dark night tones, emphasizing a sense of isolation and corporate coldness.
+
+At the top — title: "Zastąpieni", author: "D.Satora-Izquierdo" and description: "Podczas gdy media trąbią o rekordowym zatrudnieniu, młody chłopak zderza się ze ścianą, ponieważ sztuczna inteligencja całkowicie likwiduje stanowiska dla początkujących."
+
+Panel 1: A morning sun-drenched city street in Warsaw, Poland during a morning rush hour. A massive billboard reads: "POLSKA PRACUJE. Rekord zatrudnienia!". Optimistic but heavily corporate atmosphere.
+Panel 2: A dimly lit dark kitchen at night. Tomek (mid-20s) seen from over-the-shoulder. Glowing laptop screen filled with red FAILED job application emails. A line graph chart on the wall (chart - image1).
+Panel 3: A crowded city street at dusk. Corporate screens: "86% firm wprowadza AI do 2030" and "39% umiejętności idzie w odstawkę". Tomek walks through the crowd, downcast.
+Panel 4: Looking through a rainy window. Water droplets form the shape of a crashing line graph against a gray city skyline.
+Panel 5: Sleek cold corporate boardroom. Two executives (dark suits) across a table. Tablet shows "+11 New Senior Roles" vs "−9 entry-level" (chart - image2). Tomek seen from behind.
+Panel 6: Data visualization infographic. "The Clock Is Already Running" dot plot (chart – image3) above a grid of red stick figures with red 'X'. Bold text: "entry-level eliminated".
+Panel 7: Warm kitchen at night. Mother (50s) and Tomek at wooden table. Speech bubble: "Ale jak to możliwe? Wszędzie słyszę, że brakuje rąk do pracy." Tomek replies: "Rąk tak. Moich rąk — nie."
+Panel 8: Night Warsaw skyline. One lit window. Large white text: "Rekordowe zatrudnienie. Rekordowa liczba odrzuconych automatycznie. Kto liczy tych, których system nigdy nie policzył?"
+
+No panel numbering. Implement charts naturally where described. MAKE THE COMIC STYLE IMAGES less realistic, like a comic book.</div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ -->
+<!-- PROCESS -->
+<section id="process" class="section">
+  <div class="section-head">
+    <div class="section-label" data-pl>04 — Proces</div>
+    <div class="section-label" data-en>04 — Process</div>
+    <h2 data-pl>Opis procesu pracy z AI</h2>
+    <h2 data-en>AI Workflow Description</h2>
+    <p class="section-intro" data-pl>Projekt realizowano etapowo, z wieloma narzędziami AI pełniącymi odrębne funkcje. Faza generowania obrazu ujawniła istotne ograniczenia darmowych modeli.</p>
+    <p class="section-intro" data-en>The project was carried out in stages, with multiple AI tools serving distinct functions. The image generation phase revealed significant limitations of free-tier models.</p>
+  </div>
+
+  <!-- Tool overview -->
+  <div class="grid-auto" style="margin-bottom:3rem;">
+    <div class="card tool-item">
+      <img src="perplexity.jpg" alt="Perplexity">
+      <span class="role-pill role-research" data-pl>1. Badanie źródeł</span>
+      <span class="role-pill role-research" data-en>1. Source research</span>
+      <h4>Perplexity</h4>
+      <p data-pl>Zebranie wiarygodnych raportów instytucji (Eurostat, ILO, WEF) na podstawie precyzyjnie skonstruowanego promptu.</p>
+      <p data-en>Gathering credible reports from institutions (Eurostat, ILO, WEF) based on a precisely constructed prompt.</p>
+    </div>
+    <div class="card tool-item">
+      <img src="claude.jpg" alt="Claude">
+      <span class="role-pill role-script" data-pl>2. Scenariusz komiksu</span>
+      <span class="role-pill role-script" data-en>2. Comic script</span>
+      <h4>Claude</h4>
+      <p data-pl>Synteza danych z raportów i przekład na strukturę narracyjną 8 kadrów. Opracowanie promptu do generowania obrazów.</p>
+      <p data-en>Synthesis of report data and translation into an 8-panel narrative structure. Development of image generation prompt.</p>
+    </div>
+    <div class="card tool-item">
+      <img src="datawrapper.jpg" alt="Datawrapper" style="background:#fff;padding:4px;border-radius:4px;">
+      <span class="role-pill role-data" data-pl>3. Wizualizacja danych</span>
+      <span class="role-pill role-data" data-en>3. Data visualisation</span>
+      <h4>Datawrapper</h4>
+      <p data-pl>Generowanie wykresów z danych Eurostat i WEF. Wybrano 3 spośród kilku wariantów wizualizacji.</p>
+      <p data-en>Generating charts from Eurostat and WEF data. 3 out of several visualisation variants selected.</p>
+    </div>
+    <div class="card tool-item">
+      <img src="gemini.jpg" alt="Gemini">
+      <span class="role-pill role-image" data-pl>4. Generowanie obrazu</span>
+      <span class="role-pill role-image" data-en>4. Image generation</span>
+      <h4>Gemini</h4>
+      <p data-pl>Pierwsze próby generowania komiksu. Ograniczone wyniki — brak tytułu, znak wodny, błędy kompozycji.</p>
+      <p data-en>First comic generation attempts. Limited results — missing title, watermark, composition errors.</p>
+    </div>
+    <div class="card tool-item">
+      <img src="canva.jpg" alt="Canva AI">
+      <span class="role-pill role-image" data-pl>5. Generowanie obrazu</span>
+      <span class="role-pill role-image" data-en>5. Image generation</span>
+      <h4>Canva AI</h4>
+      <p data-pl>Dobra kompozycja, lecz teksty pozostały angielskie. Limit miesięczny osiągnięty przed poprawką.</p>
+      <p data-en>Good composition, but text remained in English. Monthly limit hit before correction.</p>
+    </div>
+    <div class="card tool-item">
+      <img src="gpt.jpg" alt="ChatGPT">
+      <span class="role-pill role-image" data-pl>6. Generowanie obrazu</span>
+      <span class="role-pill role-image" data-en>6. Image generation</span>
+      <h4>ChatGPT</h4>
+      <p data-pl>Najlepszy wynik spośród testowanych narzędzi. Prawidłowa implementacja wykresów i polskich tekstów, choć styl zbyt realistyczny.</p>
+      <p data-en>Best result among tested tools. Correct implementation of charts and Polish text, though style too realistic.</p>
+    </div>
+  </div>
+
+  <!-- Step by step -->
+  <div class="split">
+    <div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div>
+            <h4 data-pl>Zebranie źródeł — Perplexity</h4>
+            <h4 data-en>Source gathering — Perplexity</h4>
+            <p data-pl>Na podstawie precyzyjnego promptu wygenerowano listę wiarygodnych raportów instytucji (Eurostat, ILO, WEF). Wyodrębniono kluczowe dane statystyczne.</p>
+            <p data-en>Based on a precise prompt, a list of credible institutional reports (Eurostat, ILO, WEF) was generated. Key statistical data was extracted.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div>
+            <h4 data-pl>Scenariusz komiksu — Claude</h4>
+            <h4 data-en>Comic script — Claude</h4>
+            <p data-pl>Claude przeanalizował załączone raporty i przetłożył dane na strukturę narracyjną 8 kadrów z profilem bohatera Tomka, opisem scen i promptem do generowania obrazów.</p>
+            <p data-en>Claude analysed the attached reports and translated data into an 8-panel narrative structure with Tomek's character profile, scene descriptions, and image generation prompt.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div>
+            <h4 data-pl>Wizualizacja danych — Datawrapper</h4>
+            <h4 data-en>Data visualisation — Datawrapper</h4>
+            <p data-pl>Dane zaimportowano do Datawrapper i wygenerowano kilka wariantów wykresów. Wybrano 3 wykresy do wplecenia w kadry komiksu.</p>
+            <p data-en>Data was imported into Datawrapper and several chart variants generated. 3 charts were selected to weave into the comic panels.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div>
+            <h4 data-pl>Generowanie obrazu — Gemini</h4>
+            <h4 data-en>Image generation — Gemini</h4>
+            <p data-pl>Pierwsze próby z Gemini. Wyniki ograniczone — brak tytułu, znak wodny, błędy implementacji wykresów. Powrót do Gemini po Canvie i Copilot — trzecia iteracja była już bliższa założeniom.</p>
+            <p data-en>First attempts with Gemini. Limited results — missing title, watermark, chart implementation errors. Return to Gemini after Canva and Copilot — the third iteration was closer to the spec.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div>
+            <h4 data-pl>Generowanie obrazu — Canva AI, Copilot</h4>
+            <h4 data-en>Image generation — Canva AI, Copilot</h4>
+            <p data-pl>Canva AI: dobra kompozycja, lecz teksty pozostały angielskie — limit miesięczny osiągnięty przed poprawką. Copilot: polskie znaki zastąpione nieczytelnym ciągiem — całkowicie nieskuteczny.</p>
+            <p data-en>Canva AI: good composition, but text stayed in English — monthly limit hit before correction. Copilot: Polish characters replaced by unreadable strings — completely ineffective.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">6</div>
+          <div>
+            <h4 data-pl>Generowanie obrazu — ChatGPT</h4>
+            <h4 data-en>Image generation — ChatGPT</h4>
+            <p data-pl>Najlepszy wynik spośród testowanych narzędzi. Prawidłowa implementacja wykresów i polskich tekstów. Wada: styl zbyt fotograficzny zamiast komiksowego.</p>
+            <p data-en>Best result among tested tools. Correct implementation of charts and Polish text. Flaw: style too photographic rather than comic-book.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Problems -->
+    <div>
+      <h3 style="font-size:0.9rem; font-weight:700; margin-bottom:1.25rem; color:var(--red);" data-pl>⚠ Napotkane problemy z narzędziami</h3>
+      <h3 style="font-size:0.9rem; font-weight:700; margin-bottom:1.25rem; color:var(--red);" data-en>⚠ Tool problems encountered</h3>
+      <div class="prob-grid">
+        <div class="prob-thumb" onclick="openLightbox(this)">
+          <img src="obrazki roznych narzedzi/copilot regurgitate.png" alt="Copilot">
+          <div class="prob-label">Copilot</div>
+          <div class="thumb-caption" data-pl>Dialogi i statystyki zastąpione nieczytelnym ciągiem znaków. Nieskuteczny dla polskich tekstów.</div>
+          <div class="thumb-caption" data-en>Dialogues and stats replaced by unreadable characters. Ineffective for Polish text.</div>
+        </div>
+        <div class="prob-thumb" onclick="openLightbox(this)">
+          <img src="problemy/nano banana - limity.png" alt="NanoBanana limit">
+          <div class="prob-label">NanoBanana</div>
+          <div class="thumb-caption" data-pl>Wyczerpał kredyty przed wygenerowaniem użytecznego rezultatu.</div>
+          <div class="thumb-caption" data-en>Ran out of credits before generating a usable result.</div>
+        </div>
+        <div class="prob-thumb" onclick="openLightbox(this)">
+          <img src="problemy/bledy .jpg" alt="ChatGPT limit">
+          <div class="prob-label">ChatGPT</div>
+          <div class="thumb-caption" data-pl>Dzienny limit generacji trafiony podczas poprawki — „tablet na plecach" zamiast na stole.</div>
+          <div class="thumb-caption" data-en>Daily generation limit hit while fixing — "tablet on back" instead of on the table.</div>
+        </div>
+        <div class="prob-thumb" onclick="openLightbox(this)">
+          <img src="problemy/canva limit.jpg" alt="Canva limit">
+          <div class="prob-label">Canva AI</div>
+          <div class="thumb-caption" data-pl>Miesięczny limit wyczerpany przed poprawą języka tekstów. Blokada do 1 lipca.</div>
+          <div class="thumb-caption" data-en>Monthly limit exhausted before correcting text language. Blocked until July 1st.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ -->
+<!-- STORYTELLING -->
+<section id="storytelling" class="section">
+  <div class="section-head">
+    <div class="section-label" data-pl>05 — Storytelling</div>
+    <div class="section-label" data-en>05 — Storytelling</div>
+    <h2 data-pl>Krótkie uzasadnienie wyborów storytellingowych</h2>
+    <h2 data-en>Brief Justification of Storytelling Choices</h2>
+    <p class="section-intro" data-pl>Projekt „Zastąpieni" miał na celu nadanie ludzkiej twarzy suchym danym makroekonomicznym poprzez zderzenie sprzecznych narracji.</p>
+    <p class="section-intro" data-en>The "Zastąpieni" project aimed to give a human face to dry macroeconomic data through a collision of contradictory narratives.</p>
+  </div>
+
+  <div class="grid-2" style="margin-bottom:2.5rem;">
+    <div class="story-card">
+      <h3 data-pl>📍 Zderzenie dwóch narracji</h3>
+      <h3 data-en>📍 Collision of two narratives</h3>
+      <p data-pl>Optimistyczny komunikat o rekordowym zatrudnieniu na wielkim warszawskim billboardzie (panel 1) zderzony z dramatyczną sytuacją Tomka przeglądającego maile odrzuceń w ciemnej kuchni (panel 2). Kontrast ten buduje napięcie i pokazuje, że kryzys młodych to błąd systemowy, a nie osobista porażka.</p>
+      <p data-en>The optimistic message about record employment on a large Warsaw billboard (panel 1) is collided with Tomek's dramatic situation of reviewing rejection emails in a dark kitchen (panel 2). This contrast builds tension and shows that the youth crisis is a systemic failure, not a personal failure.</p>
+    </div>
+    <div class="story-card">
+      <h3 data-pl>📊 Dane wplecione w przestrzeń</h3>
+      <h3 data-en>📊 Data woven into space</h3>
+      <p data-pl>Twarde statystyki wpleciono bezpośrednio w przestrzeń miejską i domową bohatera — dane o wdrażaniu AI przez 86% firm umieszczono na neonach korporacyjnych (panel 3), prognozę likwidacji stanowisk zwizualizowano przez deszcz tworzący na szybie kształt spadającego wykresu (panel 4).</p>
+      <p data-en>Hard statistics were woven directly into the urban and domestic space of the hero — data about AI adoption by 86% of firms placed on corporate neons (panel 3), the forecast for job elimination visualised through rain forming the shape of a falling graph on a window pane (panel 4).</p>
+    </div>
+    <div class="story-card">
+      <h3 data-pl>💬 Kulminacja emocjonalna</h3>
+      <h3 data-en>💬 Emotional climax</h3>
+      <p data-pl>Rozmowa z matką (panel 7) zderza medialny przekaz o „braku rąk do pracy" z bezsilną ripostą Tomka: <em>„Rąk tak. Moich rąk — nie."</em> To jedno zdanie przekłada dane makroekonomiczne na indywidualne doświadczenie wykluczenia.</p>
+      <p data-en>The conversation with the mother (panel 7) collides the media message about "labour shortage" with Tomek's helpless reply: <em>"Labour yes. My labour — no."</em> This single sentence translates macroeconomic data into an individual experience of exclusion.</p>
+    </div>
+    <div class="story-card">
+      <h3 data-pl>❓ Otwarte pytanie retoryczne</h3>
+      <h3 data-en>❓ Open rhetorical question</h3>
+      <p data-pl>Całość zamyka mocne pytanie na tle nocnej panoramy Warszawy (panel 8): <em>„Rekordowe zatrudnienie. Rekordowa liczba odrzuconych automatycznie. Kto liczy tych, których system nigdy nie policzył?"</em> — wywołując empatię i skłaniając do refleksji nad bezdusznością automatyzacji systemów rekrutacyjnych.</p>
+      <p data-en>The story closes with a powerful question against the Warsaw night skyline (panel 8): <em>"Record employment. Record number automatically rejected. Who counts those the system never counted?"</em> — evoking empathy and prompting reflection on the soullessness of automated recruitment systems.</p>
+    </div>
+  </div>
+
+  <!-- Palette & mood -->
+  <div class="card" style="padding:2rem;">
+    <h3 style="font-size:0.95rem; font-weight:700; margin-bottom:1rem;" data-pl>🎨 Paleta kolorów i nastrój</h3>
+    <h3 style="font-size:0.95rem; font-weight:700; margin-bottom:1rem;" data-en>🎨 Colour palette and mood</h3>
+    <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:1rem;">
+      <div style="text-align:center;">
+        <div style="width:60px;height:40px;border-radius:6px;background:linear-gradient(135deg,#f4a853,#e8c87a);margin:0 auto 0.4rem;"></div>
+        <div style="font-size:0.7rem;color:var(--muted);" data-pl>Panel 1–2<br>Ciepły świt</div>
+        <div style="font-size:0.7rem;color:var(--muted);" data-en>Panel 1–2<br>Warm dawn</div>
+      </div>
+      <div style="text-align:center; align-self:center; font-size:1.2rem; color:var(--muted);">→</div>
+      <div style="text-align:center;">
+        <div style="width:60px;height:40px;border-radius:6px;background:linear-gradient(135deg,#3a5a7a,#2a4060);margin:0 auto 0.4rem;"></div>
+        <div style="font-size:0.7rem;color:var(--muted);" data-pl>Panel 3–4<br>Zmierzch</div>
+        <div style="font-size:0.7rem;color:var(--muted);" data-en>Panel 3–4<br>Dusk</div>
+      </div>
+      <div style="text-align:center; align-self:center; font-size:1.2rem; color:var(--muted);">→</div>
+      <div style="text-align:center;">
+        <div style="width:60px;height:40px;border-radius:6px;background:linear-gradient(135deg,#1a2535,#0d1520);margin:0 auto 0.4rem;"></div>
+        <div style="font-size:0.7rem;color:var(--muted);" data-pl>Panel 5–8<br>Zimna noc</div>
+        <div style="font-size:0.7rem;color:var(--muted);" data-en>Panel 5–8<br>Cold night</div>
+      </div>
+    </div>
+    <p style="font-size:0.85rem; color:var(--muted);" data-pl>Paleta celowo przesuwa się od ciepłego świtu nadziei (billboard z „rekordem zatrudnienia") do zimnych, deszczowych szarości i granatowej nocy — symbolizując rosnące poczucie izolacji i korporacyjnej obojętności, jakiego doświadcza Tomek.</p>
+    <p style="font-size:0.85rem; color:var(--muted);" data-en>The palette deliberately shifts from a warm dawn of hope (billboard with "record employment") to cold, rainy greys and navy night — symbolising the growing sense of isolation and corporate indifference that Tomek experiences.</p>
+  </div>
+
+  <!-- Key data row -->
+  <div style="display:flex; gap:1.25rem; flex-wrap:wrap; margin-top:2.5rem;">
+    <div class="card stat-box" style="flex:1; min-width:130px;">
+      <div class="big stat-red">−9 mln</div>
+      <div class="sm" data-pl>stanowisk entry-level eliminowanych do 2030</div>
+      <div class="sm" data-en>entry-level jobs eliminated by 2030</div>
+    </div>
+    <div class="card stat-box" style="flex:1; min-width:130px;">
+      <div class="big stat-blue">+11 mln</div>
+      <div class="sm" data-pl>ról senior tworzonych przez AI (WEF)</div>
+      <div class="sm" data-en>senior roles created by AI (WEF)</div>
+    </div>
+    <div class="card stat-box" style="flex:1; min-width:130px;">
+      <div class="big stat-accent">86%</div>
+      <div class="sm" data-pl>firm wdraża AI do 2030 (WEF)</div>
+      <div class="sm" data-en>firms adopting AI by 2030 (WEF)</div>
+    </div>
+    <div class="card stat-box" style="flex:1; min-width:130px;">
+      <div class="big stat-accent">201,6 mln</div>
+      <div class="sm" data-pl>pracujących w UE — rekord (Eurostat)</div>
+      <div class="sm" data-en>employed in EU — record (Eurostat)</div>
+    </div>
+  </div>
+</section>
+
+<footer style="padding:2rem 4rem; border-top:1px solid var(--border); text-align:center; color:var(--muted); font-size:0.78rem;">
+  <span data-pl>D. Satora-Izquierdo · Data Storytelling · AI Narzedziownik · czerwiec 2026. Raport wygenerowany przy użyciu Claude Code. Treść merytoryczna i odpowiedzialność: autor.</span>
+  <span data-en>D. Satora-Izquierdo · Data Storytelling · AI Toolkit Course · June 2026. Report generated using Claude Code. Substantive content and responsibility: author.</span>
+</footer>
+
+</main>
+</div>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" onclick="if(event.target===this)closeLightbox()">
+  <button class="lb-close" onclick="closeLightbox()">✕</button>
+  <img id="lb-img" src="" alt="">
+  <div class="lb-caption" id="lb-caption"></div>
+</div>
+
+<script>
+function openLightbox(el) {
+  const img = el.querySelector('img');
+  const capEl = el.querySelector('.thumb-caption:not([style*="display: none"])') ||
+                el.querySelector('.thumb-caption');
+  document.getElementById('lb-img').src = img.src;
+  document.getElementById('lb-img').alt = img.alt;
+  // pick the visible caption based on current lang
+  const lang = document.body.className.includes('lang-en') ? 'en' : 'pl';
+  const caps = el.querySelectorAll('.thumb-caption');
+  let caption = '';
+  caps.forEach(c => {
+    if (!c.dataset.pl && !c.dataset.en) caption = c.textContent;
+    if (lang === 'pl' && c.hasAttribute('data-pl')) caption = c.textContent;
+    if (lang === 'en' && c.hasAttribute('data-en')) caption = c.textContent;
+  });
+  document.getElementById('lb-caption').textContent = caption;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+function setLang(lang) {
+  document.body.className = 'lang-' + lang;
+  document.getElementById('btn-pl').classList.toggle('active', lang === 'pl');
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  localStorage.setItem('lang', lang);
+}
+const saved = localStorage.getItem('lang');
+if (saved) setLang(saved);
+
+// Active nav link
+const sections = document.querySelectorAll('section[id], div[id="hero"]');
+const navItems = document.querySelectorAll('.nav-item');
+const sectionIds = ['hero','comic','ewolucja','sources','prompts','process','storytelling'];
+
+window.addEventListener('scroll', () => {
+  let current = 'hero';
+  sectionIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && window.scrollY >= el.offsetTop - 200) current = id;
+  });
+  navItems.forEach(item => {
+    const href = item.getAttribute('href').replace('#','');
+    item.classList.toggle('active', href === current);
+  });
+}, { passive: true });
+</script>
+</body>
+</html>
