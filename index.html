@@ -312,9 +312,9 @@ body.lang-pl [data-en] { display: none !important; }
       <span class="nav-arrow">→</span>
       <span data-pl>Komiks — PDF</span><span data-en>Comic — PDF</span>
     </a>
-    <a href="#ewolucja" class="nav-item">
+    <a href="#storytelling" class="nav-item">
       <span class="nav-arrow">→</span>
-      <span data-pl>Ewolucja projektu</span><span data-en>Project Evolution</span>
+      <span data-pl>Uzasadnienie storytellingowe</span><span data-en>Storytelling justification</span>
     </a>
     <a href="#sources" class="nav-item">
       <span class="nav-arrow">→</span>
@@ -328,9 +328,9 @@ body.lang-pl [data-en] { display: none !important; }
       <span class="nav-arrow">→</span>
       <span data-pl>Opis procesu pracy z AI</span><span data-en>AI workflow description</span>
     </a>
-    <a href="#storytelling" class="nav-item">
+    <a href="#ewolucja" class="nav-item">
       <span class="nav-arrow">→</span>
-      <span data-pl>Krótkie uzasadnienie wyborów storytellingowych</span><span data-en>Storytelling choices justification</span>
+      <span data-pl>Ewolucja projektu</span><span data-en>Project Evolution</span>
     </a>
   </nav>
   <div class="sidebar-footer">
@@ -400,69 +400,94 @@ body.lang-pl [data-en] { display: none !important; }
 </section>
 
 <!-- ═══════════════════════════════════ -->
-<!-- EWOLUCJA PROJEKTU -->
-<section id="ewolucja" class="section">
+<!-- STORYTELLING -->
+<section id="storytelling" class="section">
   <div class="section-head">
-    <div class="section-label" data-pl>02 — Ewolucja projektu</div>
-    <div class="section-label" data-en>02 — Project Evolution</div>
-    <h2 data-pl>Ewolucja projektu</h2>
-    <h2 data-en>Project Evolution</h2>
-    <p class="section-intro" data-pl>Kolejne iteracje komiksu generowane różnymi narzędziami AI. Kliknij miniaturę, aby powiększyć.</p>
-    <p class="section-intro" data-en>Successive comic iterations generated with different AI tools. Click a thumbnail to enlarge.</p>
+    <div class="section-label" data-pl>02 — Uzasadnienie storytellingowe</div>
+    <div class="section-label" data-en>02 — Uzasadnienie storytellingowe</div>
+    <h2 data-pl>Uzasadnienie storytellingowe</h2>
+    <h2 data-en>Storytelling Justification</h2>
+    <p class="section-intro" data-pl>Projekt „Zastąpieni" miał na celu nadanie ludzkiej twarzy suchym danym makroekonomicznym poprzez zderzenie sprzecznych narracji.</p>
+    <p class="section-intro" data-en>The "Zastąpieni" project aimed to give a human face to dry macroeconomic data through a collision of contradictory narratives.</p>
   </div>
 
-  <div class="thumb-grid">
-    <!-- 1. Gemini -->
-    <div class="thumb" onclick="openLightbox(this)">
-      <img src="obrazki roznych narzedzi/gemini chart problem.png" alt="Gemini — iter. 1">
-      <div class="thumb-label"><span data-pl>1. Gemini — iter. 1</span><span data-en>1. Gemini — iter. 1</span></div>
-      <div class="thumb-caption" data-pl>Pierwsza próba. Problem z implementacją wykresów, poziomy układ zamiast pionowego paska, brak tytułu.</div>
-      <div class="thumb-caption" data-en>First attempt. Chart implementation issue, horizontal layout instead of vertical strip, missing title.</div>
+  <div class="grid-2" style="margin-bottom:2.5rem;">
+    <div class="story-card">
+      <h3 data-pl>📍 Zderzenie dwóch narracji</h3>
+      <h3 data-en>📍 Collision of two narratives</h3>
+      <p data-pl>Optimistyczny komunikat o rekordowym zatrudnieniu na wielkim warszawskim billboardzie (panel 1) zderzony z dramatyczną sytuacją Tomka przeglądającego maile odrzuceń w ciemnej kuchni (panel 2). Kontrast ten buduje napięcie i pokazuje, że kryzys młodych to błąd systemowy, a nie osobista porażka.</p>
+      <p data-en>The optimistic message about record employment on a large Warsaw billboard (panel 1) is collided with Tomek's dramatic situation of reviewing rejection emails in a dark kitchen (panel 2). This contrast builds tension and shows that the youth crisis is a systemic failure, not a personal failure.</p>
     </div>
-    <!-- 2. Canva -->
-    <div class="thumb" onclick="openLightbox(this)">
-      <img src="obrazki roznych narzedzi/canva angielskie texty.png" alt="Canva AI">
-      <div class="thumb-label">2. Canva AI</div>
-      <div class="thumb-caption" data-pl>Dobra kompozycja i styl komiksowy. Tekst w kadrach pozostał angielski. Limit miesięczny osiągnięty przed poprawką.</div>
-      <div class="thumb-caption" data-en>Good composition and comic style. Panel text remained in English. Monthly limit hit before correction.</div>
+    <div class="story-card">
+      <h3 data-pl>📊 Dane wplecione w przestrzeń</h3>
+      <h3 data-en>📊 Data woven into space</h3>
+      <p data-pl>Twarde statystyki wpleciono bezpośrednio w przestrzeń miejską i domową bohatera — dane o wdrażaniu AI przez 86% firm umieszczono na neonach korporacyjnych (panel 3), prognozę likwidacji stanowisk zwizualizowano przez deszcz tworzący na szybie kształt spadającego wykresu (panel 4).</p>
+      <p data-en>Hard statistics were woven directly into the urban and domestic space of the hero — data about AI adoption by 86% of firms placed on corporate neons (panel 3), the forecast for job elimination visualised through rain forming the shape of a falling graph on a window pane (panel 4).</p>
     </div>
-    <!-- 3. Gemini -->
-    <div class="thumb" onclick="openLightbox(this)">
-      <img src="obrazki roznych narzedzi/gemini dibry efekt, brak tytulu.png" alt="Gemini — iter. 2">
-      <div class="thumb-label"><span data-pl>3. Gemini — iter. 2</span><span data-en>3. Gemini — iter. 2</span></div>
-      <div class="thumb-caption" data-pl>Dobry efekt komiksowy i polskie teksty. Brakuje tytułu i autora. Znak wodny.</div>
-      <div class="thumb-caption" data-en>Good comic effect and Polish text. Missing title and author. Watermark.</div>
+    <div class="story-card">
+      <h3 data-pl>💬 Kulminacja emocjonalna</h3>
+      <h3 data-en>💬 Emotional climax</h3>
+      <p data-pl>Rozmowa z matką (panel 7) zderza medialny przekaz o „braku rąk do pracy" z bezsilną ripostą Tomka: <em>„Rąk tak. Moich rąk — nie."</em> To jedno zdanie przekłada dane makroekonomiczne na indywidualne doświadczenie wykluczenia.</p>
+      <p data-en>The conversation with the mother (panel 7) collides the media message about "labour shortage" with Tomek's helpless reply: <em>"Labour yes. My labour — no."</em> This single sentence translates macroeconomic data into an individual experience of exclusion.</p>
     </div>
-    <!-- 4. Copilot -->
-    <div class="thumb" onclick="openLightbox(this)">
-      <img src="obrazki roznych narzedzi/copilot regurgitate.png" alt="Copilot">
-      <div class="thumb-label">4. Copilot</div>
-      <div class="thumb-caption" data-pl>Dialogi i statystyki zastąpione nieczytelnym ciągiem znaków. Całkowicie nieskuteczny dla polskich tekstów.</div>
-      <div class="thumb-caption" data-en>Dialogues and stats replaced by unreadable characters. Completely ineffective for Polish text.</div>
-    </div>
-    <!-- 5. GPT iter.1 -->
-    <div class="thumb" onclick="openLightbox(this)">
-      <img src="obrazki roznych narzedzi/GPT realistyczne, tablet na plecach.png" alt="ChatGPT — iter. 1">
-      <div class="thumb-label"><span data-pl>5. ChatGPT — iter. 1</span><span data-en>5. ChatGPT — iter. 1</span></div>
-      <div class="thumb-caption" data-pl>Tytuł i polskie teksty poprawne. Błąd: tablet na plecach Tomka zamiast na stole.</div>
-      <div class="thumb-caption" data-en>Title and Polish texts correct. Error: tablet on Tomek's back instead of on the table.</div>
-    </div>
-    <!-- 6. Gemini iter.3 -->
-    <div class="thumb" onclick="openLightbox(this)">
-      <img src="obrazki roznych narzedzi/gemini quite good, not perfect.png" alt="Gemini — iter. 3">
-      <div class="thumb-label"><span data-pl>6. Gemini — iter. 3</span><span data-en>6. Gemini — iter. 3</span></div>
-      <div class="thumb-caption" data-pl>Najlepsza wersja Gemini. Kompozycja i polskie teksty czytelne. Panel 5–6 niedokładny. Znak wodny.</div>
-      <div class="thumb-caption" data-en>Best Gemini version. Composition and Polish text readable. Panels 5–6 imprecise. Watermark.</div>
-    </div>
-    <!-- 7. GPT iter.2 -->
-    <div class="thumb" onclick="openLightbox(this)">
-      <img src="obrazki roznych narzedzi/GPT problem z chartem.png" alt="ChatGPT — iter. 2 ★">
-      <div class="thumb-label"><span data-pl>7. ChatGPT — iter. 2 ★</span><span data-en>7. ChatGPT — iter. 2 ★</span></div>
-      <div class="thumb-caption" data-pl>Najlepszy wynik, wykresy i teksty prawidłowe, wygląd komiksowy, acz błąd z tabletem.</div>
-      <div class="thumb-caption" data-en>Best result — charts and text correct, comic-book look, but tablet rendering error.</div>
+    <div class="story-card">
+      <h3 data-pl>❓ Otwarte pytanie retoryczne</h3>
+      <h3 data-en>❓ Open rhetorical question</h3>
+      <p data-pl>Całość zamyka mocne pytanie na tle nocnej panoramy Warszawy (panel 8): <em>„Rekordowe zatrudnienie. Rekordowa liczba odrzuconych automatycznie. Kto liczy tych, których system nigdy nie policzył?"</em> — wywołując empatię i skłaniając do refleksji nad bezdusznością automatyzacji systemów rekrutacyjnych.</p>
+      <p data-en>The story closes with a powerful question against the Warsaw night skyline (panel 8): <em>"Record employment. Record number automatically rejected. Who counts those the system never counted?"</em> — evoking empathy and prompting reflection on the soullessness of automated recruitment systems.</p>
     </div>
   </div>
-</section>
+
+  <!-- Palette & mood -->
+  <div class="card" style="padding:2rem;">
+    <h3 style="font-size:0.95rem; font-weight:700; margin-bottom:1rem;" data-pl>🎨 Paleta kolorów i nastrój</h3>
+    <h3 style="font-size:0.95rem; font-weight:700; margin-bottom:1rem;" data-en>🎨 Colour palette and mood</h3>
+    <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:1rem;">
+      <div style="text-align:center;">
+        <div style="width:60px;height:40px;border-radius:6px;background:linear-gradient(135deg,#f4a853,#e8c87a);margin:0 auto 0.4rem;"></div>
+        <div style="font-size:0.7rem;color:var(--muted);" data-pl>Panel 1–2<br>Ciepły świt</div>
+        <div style="font-size:0.7rem;color:var(--muted);" data-en>Panel 1–2<br>Warm dawn</div>
+      </div>
+      <div style="text-align:center; align-self:center; font-size:1.2rem; color:var(--muted);">→</div>
+      <div style="text-align:center;">
+        <div style="width:60px;height:40px;border-radius:6px;background:linear-gradient(135deg,#3a5a7a,#2a4060);margin:0 auto 0.4rem;"></div>
+        <div style="font-size:0.7rem;color:var(--muted);" data-pl>Panel 3–4<br>Zmierzch</div>
+        <div style="font-size:0.7rem;color:var(--muted);" data-en>Panel 3–4<br>Dusk</div>
+      </div>
+      <div style="text-align:center; align-self:center; font-size:1.2rem; color:var(--muted);">→</div>
+      <div style="text-align:center;">
+        <div style="width:60px;height:40px;border-radius:6px;background:linear-gradient(135deg,#1a2535,#0d1520);margin:0 auto 0.4rem;"></div>
+        <div style="font-size:0.7rem;color:var(--muted);" data-pl>Panel 5–8<br>Zimna noc</div>
+        <div style="font-size:0.7rem;color:var(--muted);" data-en>Panel 5–8<br>Cold night</div>
+      </div>
+    </div>
+    <p style="font-size:0.85rem; color:var(--muted);" data-pl>Paleta celowo przesuwa się od ciepłego świtu nadziei (billboard z „rekordem zatrudnienia") do zimnych, deszczowych szarości i granatowej nocy — symbolizując rosnące poczucie izolacji i korporacyjnej obojętności, jakiego doświadcza Tomek.</p>
+    <p style="font-size:0.85rem; color:var(--muted);" data-en>The palette deliberately shifts from a warm dawn of hope (billboard with "record employment") to cold, rainy greys and navy night — symbolising the growing sense of isolation and corporate indifference that Tomek experiences.</p>
+  </div>
+
+  <!-- Key data row -->
+  <div style="display:flex; gap:1.25rem; flex-wrap:wrap; margin-top:2.5rem;">
+    <div class="card stat-box" style="flex:1; min-width:130px;">
+      <div class="big stat-red">−9 mln</div>
+      <div class="sm" data-pl>stanowisk entry-level eliminowanych do 2030</div>
+      <div class="sm" data-en>entry-level jobs eliminated by 2030</div>
+    </div>
+    <div class="card stat-box" style="flex:1; min-width:130px;">
+      <div class="big stat-blue">+11 mln</div>
+      <div class="sm" data-pl>ról senior tworzonych przez AI (WEF)</div>
+      <div class="sm" data-en>senior roles created by AI (WEF)</div>
+    </div>
+    <div class="card stat-box" style="flex:1; min-width:130px;">
+      <div class="big stat-accent">86%</div>
+      <div class="sm" data-pl>firm wdraża AI do 2030 (WEF)</div>
+      <div class="sm" data-en>firms adopting AI by 2030 (WEF)</div>
+    </div>
+    <div class="card stat-box" style="flex:1; min-width:130px;">
+      <div class="big stat-accent">201,6 mln</div>
+      <div class="sm" data-pl>pracujących w UE — rekord (Eurostat)</div>
+      <div class="sm" data-en>employed in EU — record (Eurostat)</div>
+    </div>
+  </div>
 </section>
 
 <!-- ═══════════════════════════════════ -->
@@ -759,94 +784,69 @@ No panel numbering. Implement charts naturally where described. MAKE THE COMIC S
 </section>
 
 <!-- ═══════════════════════════════════ -->
-<!-- STORYTELLING -->
-<section id="storytelling" class="section">
+<!-- EWOLUCJA PROJEKTU -->
+<section id="ewolucja" class="section">
   <div class="section-head">
-    <div class="section-label" data-pl>05 — Storytelling</div>
-    <div class="section-label" data-en>05 — Storytelling</div>
-    <h2 data-pl>Krótkie uzasadnienie wyborów storytellingowych</h2>
-    <h2 data-en>Brief Justification of Storytelling Choices</h2>
-    <p class="section-intro" data-pl>Projekt „Zastąpieni" miał na celu nadanie ludzkiej twarzy suchym danym makroekonomicznym poprzez zderzenie sprzecznych narracji.</p>
-    <p class="section-intro" data-en>The "Zastąpieni" project aimed to give a human face to dry macroeconomic data through a collision of contradictory narratives.</p>
+    <div class="section-label" data-pl>05 — Ewolucja projektu</div>
+    <div class="section-label" data-en>05 — Project Evolution</div>
+    <h2 data-pl>Ewolucja projektu</h2>
+    <h2 data-en>Project Evolution</h2>
+    <p class="section-intro" data-pl>Kolejne iteracje komiksu generowane różnymi narzędziami AI. Kliknij miniaturę, aby powiększyć.</p>
+    <p class="section-intro" data-en>Successive comic iterations generated with different AI tools. Click a thumbnail to enlarge.</p>
   </div>
 
-  <div class="grid-2" style="margin-bottom:2.5rem;">
-    <div class="story-card">
-      <h3 data-pl>📍 Zderzenie dwóch narracji</h3>
-      <h3 data-en>📍 Collision of two narratives</h3>
-      <p data-pl>Optimistyczny komunikat o rekordowym zatrudnieniu na wielkim warszawskim billboardzie (panel 1) zderzony z dramatyczną sytuacją Tomka przeglądającego maile odrzuceń w ciemnej kuchni (panel 2). Kontrast ten buduje napięcie i pokazuje, że kryzys młodych to błąd systemowy, a nie osobista porażka.</p>
-      <p data-en>The optimistic message about record employment on a large Warsaw billboard (panel 1) is collided with Tomek's dramatic situation of reviewing rejection emails in a dark kitchen (panel 2). This contrast builds tension and shows that the youth crisis is a systemic failure, not a personal failure.</p>
+  <div class="thumb-grid">
+    <!-- 1. Gemini -->
+    <div class="thumb" onclick="openLightbox(this)">
+      <img src="obrazki roznych narzedzi/gemini chart problem.png" alt="Gemini — iter. 1">
+      <div class="thumb-label"><span data-pl>1. Gemini — iter. 1</span><span data-en>1. Gemini — iter. 1</span></div>
+      <div class="thumb-caption" data-pl>Pierwsza próba. Problem z implementacją wykresów, poziomy układ zamiast pionowego paska, brak tytułu.</div>
+      <div class="thumb-caption" data-en>First attempt. Chart implementation issue, horizontal layout instead of vertical strip, missing title.</div>
     </div>
-    <div class="story-card">
-      <h3 data-pl>📊 Dane wplecione w przestrzeń</h3>
-      <h3 data-en>📊 Data woven into space</h3>
-      <p data-pl>Twarde statystyki wpleciono bezpośrednio w przestrzeń miejską i domową bohatera — dane o wdrażaniu AI przez 86% firm umieszczono na neonach korporacyjnych (panel 3), prognozę likwidacji stanowisk zwizualizowano przez deszcz tworzący na szybie kształt spadającego wykresu (panel 4).</p>
-      <p data-en>Hard statistics were woven directly into the urban and domestic space of the hero — data about AI adoption by 86% of firms placed on corporate neons (panel 3), the forecast for job elimination visualised through rain forming the shape of a falling graph on a window pane (panel 4).</p>
+    <!-- 2. Canva -->
+    <div class="thumb" onclick="openLightbox(this)">
+      <img src="obrazki roznych narzedzi/canva angielskie texty.png" alt="Canva AI">
+      <div class="thumb-label">2. Canva AI</div>
+      <div class="thumb-caption" data-pl>Dobra kompozycja i styl komiksowy. Tekst w kadrach pozostał angielski. Limit miesięczny osiągnięty przed poprawką.</div>
+      <div class="thumb-caption" data-en>Good composition and comic style. Panel text remained in English. Monthly limit hit before correction.</div>
     </div>
-    <div class="story-card">
-      <h3 data-pl>💬 Kulminacja emocjonalna</h3>
-      <h3 data-en>💬 Emotional climax</h3>
-      <p data-pl>Rozmowa z matką (panel 7) zderza medialny przekaz o „braku rąk do pracy" z bezsilną ripostą Tomka: <em>„Rąk tak. Moich rąk — nie."</em> To jedno zdanie przekłada dane makroekonomiczne na indywidualne doświadczenie wykluczenia.</p>
-      <p data-en>The conversation with the mother (panel 7) collides the media message about "labour shortage" with Tomek's helpless reply: <em>"Labour yes. My labour — no."</em> This single sentence translates macroeconomic data into an individual experience of exclusion.</p>
+    <!-- 3. Gemini -->
+    <div class="thumb" onclick="openLightbox(this)">
+      <img src="obrazki roznych narzedzi/gemini dibry efekt, brak tytulu.png" alt="Gemini — iter. 2">
+      <div class="thumb-label"><span data-pl>3. Gemini — iter. 2</span><span data-en>3. Gemini — iter. 2</span></div>
+      <div class="thumb-caption" data-pl>Dobry efekt komiksowy i polskie teksty. Brakuje tytułu i autora. Znak wodny.</div>
+      <div class="thumb-caption" data-en>Good comic effect and Polish text. Missing title and author. Watermark.</div>
     </div>
-    <div class="story-card">
-      <h3 data-pl>❓ Otwarte pytanie retoryczne</h3>
-      <h3 data-en>❓ Open rhetorical question</h3>
-      <p data-pl>Całość zamyka mocne pytanie na tle nocnej panoramy Warszawy (panel 8): <em>„Rekordowe zatrudnienie. Rekordowa liczba odrzuconych automatycznie. Kto liczy tych, których system nigdy nie policzył?"</em> — wywołując empatię i skłaniając do refleksji nad bezdusznością automatyzacji systemów rekrutacyjnych.</p>
-      <p data-en>The story closes with a powerful question against the Warsaw night skyline (panel 8): <em>"Record employment. Record number automatically rejected. Who counts those the system never counted?"</em> — evoking empathy and prompting reflection on the soullessness of automated recruitment systems.</p>
+    <!-- 4. Copilot -->
+    <div class="thumb" onclick="openLightbox(this)">
+      <img src="obrazki roznych narzedzi/copilot regurgitate.png" alt="Copilot">
+      <div class="thumb-label">4. Copilot</div>
+      <div class="thumb-caption" data-pl>Dialogi i statystyki zastąpione nieczytelnym ciągiem znaków. Całkowicie nieskuteczny dla polskich tekstów.</div>
+      <div class="thumb-caption" data-en>Dialogues and stats replaced by unreadable characters. Completely ineffective for Polish text.</div>
     </div>
-  </div>
-
-  <!-- Palette & mood -->
-  <div class="card" style="padding:2rem;">
-    <h3 style="font-size:0.95rem; font-weight:700; margin-bottom:1rem;" data-pl>🎨 Paleta kolorów i nastrój</h3>
-    <h3 style="font-size:0.95rem; font-weight:700; margin-bottom:1rem;" data-en>🎨 Colour palette and mood</h3>
-    <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:1rem;">
-      <div style="text-align:center;">
-        <div style="width:60px;height:40px;border-radius:6px;background:linear-gradient(135deg,#f4a853,#e8c87a);margin:0 auto 0.4rem;"></div>
-        <div style="font-size:0.7rem;color:var(--muted);" data-pl>Panel 1–2<br>Ciepły świt</div>
-        <div style="font-size:0.7rem;color:var(--muted);" data-en>Panel 1–2<br>Warm dawn</div>
-      </div>
-      <div style="text-align:center; align-self:center; font-size:1.2rem; color:var(--muted);">→</div>
-      <div style="text-align:center;">
-        <div style="width:60px;height:40px;border-radius:6px;background:linear-gradient(135deg,#3a5a7a,#2a4060);margin:0 auto 0.4rem;"></div>
-        <div style="font-size:0.7rem;color:var(--muted);" data-pl>Panel 3–4<br>Zmierzch</div>
-        <div style="font-size:0.7rem;color:var(--muted);" data-en>Panel 3–4<br>Dusk</div>
-      </div>
-      <div style="text-align:center; align-self:center; font-size:1.2rem; color:var(--muted);">→</div>
-      <div style="text-align:center;">
-        <div style="width:60px;height:40px;border-radius:6px;background:linear-gradient(135deg,#1a2535,#0d1520);margin:0 auto 0.4rem;"></div>
-        <div style="font-size:0.7rem;color:var(--muted);" data-pl>Panel 5–8<br>Zimna noc</div>
-        <div style="font-size:0.7rem;color:var(--muted);" data-en>Panel 5–8<br>Cold night</div>
-      </div>
+    <!-- 5. GPT iter.1 -->
+    <div class="thumb" onclick="openLightbox(this)">
+      <img src="obrazki roznych narzedzi/GPT realistyczne, tablet na plecach.png" alt="ChatGPT — iter. 1">
+      <div class="thumb-label"><span data-pl>5. ChatGPT — iter. 1</span><span data-en>5. ChatGPT — iter. 1</span></div>
+      <div class="thumb-caption" data-pl>Tytuł i polskie teksty poprawne. Błąd: tablet na plecach Tomka zamiast na stole.</div>
+      <div class="thumb-caption" data-en>Title and Polish texts correct. Error: tablet on Tomek's back instead of on the table.</div>
     </div>
-    <p style="font-size:0.85rem; color:var(--muted);" data-pl>Paleta celowo przesuwa się od ciepłego świtu nadziei (billboard z „rekordem zatrudnienia") do zimnych, deszczowych szarości i granatowej nocy — symbolizując rosnące poczucie izolacji i korporacyjnej obojętności, jakiego doświadcza Tomek.</p>
-    <p style="font-size:0.85rem; color:var(--muted);" data-en>The palette deliberately shifts from a warm dawn of hope (billboard with "record employment") to cold, rainy greys and navy night — symbolising the growing sense of isolation and corporate indifference that Tomek experiences.</p>
-  </div>
-
-  <!-- Key data row -->
-  <div style="display:flex; gap:1.25rem; flex-wrap:wrap; margin-top:2.5rem;">
-    <div class="card stat-box" style="flex:1; min-width:130px;">
-      <div class="big stat-red">−9 mln</div>
-      <div class="sm" data-pl>stanowisk entry-level eliminowanych do 2030</div>
-      <div class="sm" data-en>entry-level jobs eliminated by 2030</div>
+    <!-- 6. Gemini iter.3 -->
+    <div class="thumb" onclick="openLightbox(this)">
+      <img src="obrazki roznych narzedzi/gemini quite good, not perfect.png" alt="Gemini — iter. 3">
+      <div class="thumb-label"><span data-pl>6. Gemini — iter. 3</span><span data-en>6. Gemini — iter. 3</span></div>
+      <div class="thumb-caption" data-pl>Najlepsza wersja Gemini. Kompozycja i polskie teksty czytelne. Panel 5–6 niedokładny. Znak wodny.</div>
+      <div class="thumb-caption" data-en>Best Gemini version. Composition and Polish text readable. Panels 5–6 imprecise. Watermark.</div>
     </div>
-    <div class="card stat-box" style="flex:1; min-width:130px;">
-      <div class="big stat-blue">+11 mln</div>
-      <div class="sm" data-pl>ról senior tworzonych przez AI (WEF)</div>
-      <div class="sm" data-en>senior roles created by AI (WEF)</div>
-    </div>
-    <div class="card stat-box" style="flex:1; min-width:130px;">
-      <div class="big stat-accent">86%</div>
-      <div class="sm" data-pl>firm wdraża AI do 2030 (WEF)</div>
-      <div class="sm" data-en>firms adopting AI by 2030 (WEF)</div>
-    </div>
-    <div class="card stat-box" style="flex:1; min-width:130px;">
-      <div class="big stat-accent">201,6 mln</div>
-      <div class="sm" data-pl>pracujących w UE — rekord (Eurostat)</div>
-      <div class="sm" data-en>employed in EU — record (Eurostat)</div>
+    <!-- 7. GPT iter.2 -->
+    <div class="thumb" onclick="openLightbox(this)">
+      <img src="obrazki roznych narzedzi/GPT problem z chartem.png" alt="ChatGPT — iter. 2 ★">
+      <div class="thumb-label"><span data-pl>7. ChatGPT — iter. 2 ★</span><span data-en>7. ChatGPT — iter. 2 ★</span></div>
+      <div class="thumb-caption" data-pl>Najlepszy wynik, wykresy i teksty prawidłowe, wygląd komiksowy, acz błąd z tabletem.</div>
+      <div class="thumb-caption" data-en>Best result — charts and text correct, comic-book look, but tablet rendering error.</div>
     </div>
   </div>
+</section>
 </section>
 
 <footer style="padding:2rem 4rem; border-top:1px solid var(--border); text-align:center; color:var(--muted); font-size:0.78rem;">
