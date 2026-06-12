@@ -29,7 +29,7 @@ body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); co
 .sidebar {
   width: 280px; flex-shrink: 0;
   background: var(--bg2); border-right: 1px solid var(--border);
-  position: fixed; top: 0; left: 0; height: 100vh; overflow-y: auto;
+  position: sticky; top: 0; height: 100vh; overflow-y: auto;
   display: flex; flex-direction: column;
   padding: 2rem 0;
 }
@@ -57,7 +57,7 @@ body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); co
 .lang-toggle button.active { background: var(--accent); color: #000; }
 
 /* ── MAIN ── */
-.main { flex: 1; min-width: 0; margin-left: 280px; }
+.main { flex: 1; min-width: 0; }
 
 /* ── HERO ── */
 .hero {
@@ -277,8 +277,7 @@ body.lang-pl [data-en] { display: none !important; }
 /* ── RESPONSIVE ── */
 @media(max-width: 960px) {
   .layout { flex-direction: column; }
-  .sidebar { width: 100%; height: auto; position: sticky; top: 0; left: auto; z-index: 100; flex-direction: row; flex-wrap: wrap; padding: 1rem; }
-  .main { margin-left: 0; }
+  .sidebar { width: 100%; height: auto; position: sticky; top: 0; z-index: 100; flex-direction: row; flex-wrap: wrap; padding: 1rem; }
   .sidebar-logo { padding: 0.5rem 1rem 0.5rem 0; border-bottom: none; border-right: 1px solid var(--border); margin-right: 1rem; }
   .sidebar-nav { display: flex; flex-wrap: wrap; padding: 0; flex: 1; }
   .nav-item { padding: 0.5rem 0.75rem; font-size: 0.76rem; }
