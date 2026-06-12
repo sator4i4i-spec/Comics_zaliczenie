@@ -57,7 +57,7 @@ body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); co
 .lang-toggle button.active { background: var(--accent); color: #000; }
 
 /* ── MAIN ── */
-.main { flex: 1; overflow: hidden; margin-left: 280px; }
+.main { flex: 1; min-width: 0; margin-left: 280px; }
 
 /* ── HERO ── */
 .hero {
@@ -895,22 +895,26 @@ function setLang(lang) {
 const saved = localStorage.getItem('lang');
 if (saved) setLang(saved);
 
-// Active nav link
-const sections = document.querySelectorAll('section[id], div[id="hero"]');
+// Active nav link — IntersectionObserver (reliable with fixed sidebar)
 const navItems = document.querySelectorAll('.nav-item');
 const sectionIds = ['hero','comic','storytelling','process','prompts','ewolucja','sources'];
 
-window.addEventListener('scroll', () => {
-  let current = 'hero';
-  sectionIds.forEach(id => {
-    const el = document.getElementById(id);
-    if (el && window.scrollY >= el.offsetTop - 200) current = id;
-  });
+function setActiveNav(id) {
   navItems.forEach(item => {
-    const href = item.getAttribute('href').replace('#','');
-    item.classList.toggle('active', href === current);
+    item.classList.toggle('active', item.getAttribute('href') === '#' + id);
   });
-}, { passive: true });
+}
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) setActiveNav(entry.target.id);
+  });
+}, { rootMargin: '-20% 0px -75% 0px' });
+
+sectionIds.forEach(id => {
+  const el = document.getElementById(id);
+  if (el) observer.observe(el);
+});
 </script>
 </body>
 </html>
